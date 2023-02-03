@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Filename: ./example-xtrace
+# Search from internet at https://www.shell-tips.com/bash/debug-script/#gsc.tab=0
+# How to use this example
+#me@linux ~]$ TRACE=1 BASH_ENV=my-debug-env ./example-xtrace param1
+echo "This got executed"
+v=$1
+if [[ -z "${v}" ]]; then
+ echo "\$v is empty"
+fi
