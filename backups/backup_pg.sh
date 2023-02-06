@@ -52,19 +52,29 @@ verifica_estrutura()
 }
 executa_backup()
 {
-        #Iniciamos o processo criando o diretorio para o backup
-        #Se o diretorio existir entao executamos o backup, senao sai fora.
-        ARQ_LOGS=$BASE_DIR/backup.$BACKUP_DIR.log
-        gera_log "Iniciando o backup do dia $BACKUP_DIR"
-        verifica_estrutura $BASE_DIR $BACKUP_DIR
-        if [ $? -eq  0 ]; then
-                gera_log "Executando o backup base para o diretorio $BASE_DIR/$BACKUP_DIR"
-                pg_basebackup -D $BASE_DIR/$BACKUP_DIR  -P -Ft -z -Xs -h localhost -p 5432 -U postgres -w
+        local backup_ok=1
+        pg_basebackup -D $BASE_DIR/$BACKUP_DIR  -P -Ft -z -Xs -h localhost -p 5432 -U postgres -w
+        if [ $? -eq 0]; then
+                backup_ok=0
         else
-                gera_log "Nao foi possivel efetuar o backup, verifique!!!"
+                backup_ok=1
         fi
-
+        return $backup_ok
 }
 
 #Executando o backup
-executa_backup;
+#Iniciamos o processo criando o diretorio para o backup
+#Se o diretorio existir entao executamos o backup, senao sai fora.
+ARQ_LOGS=$BASE_DIR/backup.$BACKUP_DIR.log
+gera_log "Iniciando o backup do dia $BACKUP_DIR"
+verifica_estrutura $BASE_DIR $BACKUP_DIR
+if [ $? -eq  0 ]; then
+        gera_log "Executando o backup base para o diretorio $BASE_DIR/$BACKUP_DIR"
+        if executa_backup; then
+		gera_log "Backup efetuado com sucesso para o diretorio $BASE_DIR/$BACKUP_DIR"
+        else
+		gera_log "Nao foi possivel efetuar o backup para o dia $BACKUP_DIR, verifique!!!"
+else
+        gera_log "Estrutura de diretorios para o backup nao esta preparada, verifique!!!"
+        exit 1;
+fi
