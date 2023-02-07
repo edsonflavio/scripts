@@ -72,13 +72,14 @@ remove_backup()
         if existe_dir; then
                 gera_log "Parametros recebido para variavel BASE  $BASE e variavel DIR $DIR "
                 gera_log "Diretorio $DIR existe e iremos remove-lo!! "
-                gera_log "De acordo com a politica sera mantido apenas um backup "
                 gera_log "Iniciando o procedimento de remocao do diretorio $DIR "
                 gera_log "Mudando para o diretorio $BASE "
                 cd $BASE
                 gera_log "Removendo o diretório $DIR no diretorio $BASE "
                 rm -rf $DIR
+                gera_log "Removendo o arquivo remove_backup.$DIR.log no diretorio $BASE "
                 rm -f remove_backup.$DIR.log
+                gera_log "Removendo o arquivo backup.$DIR.log  no diretorio $BASE "
                 rm -f backup.$DIR.log
                 if [ $? -eq 0 ];then
                         gera_log "Diretorio $DIR removido em $BASE !!!"

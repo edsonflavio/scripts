@@ -74,6 +74,7 @@ if [ $? -eq  0 ]; then
 		gera_log "Backup efetuado com sucesso para o diretorio $BASE_DIR/$BACKUP_DIR"
         else
 		gera_log "Nao foi possivel efetuar o backup para o dia $BACKUP_DIR, verifique!!!"
+	fi
 else
         gera_log "Estrutura de diretorios para o backup nao esta preparada, verifique!!!"
         exit 1;
