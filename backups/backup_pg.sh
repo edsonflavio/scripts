@@ -54,7 +54,7 @@ executa_backup()
 {
         local backup_ok=1
         pg_basebackup -D $BASE_DIR/$BACKUP_DIR  -P -Ft -z -Xs -h localhost -p 5432 -U postgres -w
-        if [ $? -eq 0]; then
+        if [ $? -eq 0 ]; then
                 backup_ok=0
         else
                 backup_ok=1
