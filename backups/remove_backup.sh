@@ -36,7 +36,7 @@ checa_backup_tipo(){
                         return $diario
                         ;;
                 backup_semanal)
-                        BACKUP_DIR=$(date -d '-1 month' '+%Y%b_%U')
+                        BACKUP_DIR=$(LC_TIME=C date -d '-1 month' '+%Y%b_%U')
                         semanal=0
                         return $semanal
                         ;;

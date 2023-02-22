@@ -5,13 +5,13 @@ Os scripts rodam no crontab, com a seguinte configuração
 
 SHELL=/bin/bash
 DATA_BACKUP=$(date +%Y%m%d)
-DATA_BACKUP_SEM=$(date +%Y%b_%U)
+DATA_BACKUP_SEM=$(LC_TIME=C date +%Y%b_%U)
 DATA_BACKUP_MEN=$(date +%Y%m)
 DIR_SCRIPTS="/var/lib/docker/volumes/NomedoContainer/_data"
 DIR_DADOS="/var/lib/docker/volumes/NomedoContainer/_data"
 
 #Remove os backup antigos
-10 1  * * 1-6  $DIR_SCRIPTS/remove_backup.sh $DIR_DADOS/backup_diario  backup_diario  > $DIR_SCRIPTS/remocao_diaria.log
+10 1  * * *  $DIR_SCRIPTS/remove_backup.sh $DIR_DADOS/backup_diario  backup_diario  > $DIR_SCRIPTS/remocao_diaria.log
 10 1  * * 7    $DIR_SCRIPTS/remove_backup.sh $DIR_DADOS/backup_semanal backup_semanal > $DIR_SCRIPTS/remocao_diaria.log
 10 1  1 * *    $DIR_SCRIPTS/remove_backup.sh $DIR_DADOS/backup_mensal  backup_mensal  > $DIR_SCRIPTS/remocao_diaria.log
 
